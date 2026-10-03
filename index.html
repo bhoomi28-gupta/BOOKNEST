@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>BookNest - Book Recommendation</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<!-- ==================================================
+     NAVIGATION BAR
+================================================== -->
+
+<header class="navbar">
+
+    <div class="logo">
+
+        <i class="fa-solid fa-book-open"></i>
+
+        <span>BookNest</span>
+
+    </div>
+
+
+    <nav>
+
+        <a href="#home">Home</a>
+
+        <a href="#books">Books</a>
+
+        <a href="#recommend">Recommend</a>
+
+        <a href="#reading">Reading List</a>
+
+        <a href="#about">About</a>
+
+    </nav>
+
+
+    <button
+        class="dark-btn"
+        onclick="toggleDarkMode()">
+
+        <i class="fa-solid fa-moon"></i>
+
+    </button>
+
+</header>
+
+
+
+<!-- ==================================================
+     HERO SECTION
+================================================== -->
+
+<section id="home" class="hero">
+
+    <div class="hero-content">
+
+        <p class="small-heading">
+            WELCOME TO BOOKNEST
+        </p>
+
+
+        <h1>
+            Find Your Next
+            <span>Favorite Book</span>
+        </h1>
+
+
+        <p class="hero-text">
+
+            Discover books based on your interests,
+            explore different genres and find your
+            next great read.
+
+        </p>
+
+
+        <!-- SEARCH -->
+
+        <div class="search-box">
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search by title, author or genre..."
+                onkeyup="searchBooks()">
+
+
+            <button onclick="searchBooks()">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+            </button>
+
+        </div>
+
+
+        <!-- GENRES -->
+
+        <div class="quick-genres">
+
+            <button onclick="filterBooks('All')">
+                All
+            </button>
+
+            <button onclick="filterBooks('Fiction')">
+                Fiction
+            </button>
+
+            <button onclick="filterBooks('Romance')">
+                Romance
+            </button>
+
+            <button onclick="filterBooks('Mystery')">
+                Mystery
+            </button>
+
+            <button onclick="filterBooks('Fantasy')">
+                Fantasy
+            </button>
+
+            <button onclick="filterBooks('Sci-Fi')">
+                Sci-Fi
+            </button>
+
+            <button onclick="filterBooks('Self-Help')">
+                Self-Help
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ==================================================
+     FEATURED BOOKS
+================================================== -->
+
+<section class="section">
+
+    <div class="section-title">
+
+        <div>
+
+            <p class="small-heading">
+                HANDPICKED FOR YOU
+            </p>
+
+            <h2>Featured Books</h2>
+
+        </div>
+
+        <a href="#books">
+            View All →
+        </a>
+
+    </div>
+
+
+    <div
+        id="featuredBooks"
+        class="book-grid">
+
+    </div>
+
+</section>
+
+
+
+<!-- ==================================================
+     BOOKS SECTION
+================================================== -->
+
+<section id="books" class="section books-section">
+
+    <div class="section-title">
+
+        <div>
+
+            <p class="small-heading">
+                EXPLORE
+            </p>
+
+            <h2>All Books</h2>
+
+        </div>
+
+    </div>
+
+
+    <!-- SEARCH + SORT -->
+
+    <div class="tools-row">
+
+
+        <div class="filter-buttons">
+
+            <button
+                class="active"
+                onclick="filterBooks('All')">
+
+                All
+
+            </button>
+
+
+            <button onclick="filterBooks('Fiction')">
+                Fiction
+            </button>
+
+
+            <button onclick="filterBooks('Romance')">
+                Romance
+            </button>
+
+
+            <button onclick="filterBooks('Mystery')">
+                Mystery
+            </button>
+
+
+            <button onclick="filterBooks('Fantasy')">
+                Fantasy
+            </button>
+
+
+            <button onclick="filterBooks('Sci-Fi')">
+                Sci-Fi
+            </button>
+
+
+            <button onclick="filterBooks('Self-Help')">
+                Self-Help
+            </button>
+
+        </div>
+
+
+        <!-- SORT -->
+
+        <select
+            id="sortSelect"
+            onchange="sortBooks()">
+
+            <option value="default">
+                Sort Books
+            </option>
+
+            <option value="ratingHigh">
+                Highest Rated
+            </option>
+
+            <option value="ratingLow">
+                Lowest Rated
+            </option>
+
+            <option value="titleAZ">
+                Title A-Z
+            </option>
+
+            <option value="titleZA">
+                Title Z-A
+            </option>
+
+            <option value="newest">
+                Newest
+            </option>
+
+            <option value="oldest">
+                Oldest
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <div
+        id="bookContainer"
+        class="book-grid">
+
+    </div>
+
+
+    <p
+        id="noResults"
+        class="no-results">
+
+        No books found.
+
+    </p>
+
+</section>
+
+
+
+<!-- ==================================================
+     RECOMMENDATION QUIZ
+================================================== -->
+
+<section
+    id="recommend"
+    class="recommend-section">
+
+
+    <div class="quiz-container">
+
+        <div class="section-heading-center">
+
+            <p class="small-heading">
+                NOT SURE WHAT TO READ?
+            </p>
+
+            <h2>
+                Find Your Perfect Book
+            </h2>
+
+            <p>
+                Answer two simple questions and
+                we'll recommend books for you.
+            </p>
+
+        </div>
+
+
+        <!-- QUESTION 1 -->
+
+        <div class="quiz-question">
+
+            <h3>
+                1. What type of book do you want?
+            </h3>
+
+
+            <div class="quiz-options">
+
+                <button
+                    class="quiz-option genre-option"
+                    data-value="Fiction"
+                    onclick="selectGenre(this)">
+
+                    📚 Fiction
+
+                </button>
+
+
+                <button
+                    class="quiz-option genre-option"
+                    data-value="Romance"
+                    onclick="selectGenre(this)">
+
+                    ❤️ Romance
+
+                </button>
+
+
+                <button
+                    class="quiz-option genre-option"
+                    data-value="Mystery"
+                    onclick="selectGenre(this)">
+
+                    🔍 Mystery
+
+                </button>
+
+
+                <button
+                    class="quiz-option genre-option"
+                    data-value="Fantasy"
+                    onclick="selectGenre(this)">
+
+                    🏰 Fantasy
+
+                </button>
+
+
+                <button
+                    class="quiz-option genre-option"
+                    data-value="Sci-Fi"
+                    onclick="selectGenre(this)">
+
+                    🚀 Sci-Fi
+
+                </button>
+
+
+                <button
+                    class="quiz-option genre-option"
+                    data-value="Self-Help"
+                    onclick="selectGenre(this)">
+
+                    🧠 Self-Help
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- QUESTION 2 -->
+
+        <div class="quiz-question">
+
+            <h3>
+                2. What are you in the mood for?
+            </h3>
+
+
+            <div class="quiz-options">
+
+                <button
+                    class="quiz-option mood-option"
+                    data-value="Relaxing"
+                    onclick="selectMood(this)">
+
+                    😌 Relaxing
+
+                </button>
+
+
+                <button
+                    class="quiz-option mood-option"
+                    data-value="Exciting"
+                    onclick="selectMood(this)">
+
+                    ⚡ Exciting
+
+                </button>
+
+
+                <button
+                    class="quiz-option mood-option"
+                    data-value="Emotional"
+                    onclick="selectMood(this)">
+
+                    💕 Emotional
+
+                </button>
+
+
+                <button
+                    class="quiz-option mood-option"
+                    data-value="Learning"
+                    onclick="selectMood(this)">
+
+                    💡 Learning
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+
+        <button
+            class="recommend-btn"
+            onclick="getRecommendations()">
+
+            🎯 Recommend Books
+
+        </button>
+
+
+        <!-- QUIZ RESULTS -->
+
+        <div
+            id="recommendationResults"
+            class="recommendation-results">
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ==================================================
+     READING LIST
+================================================== -->
+
+<section
+    id="reading"
+    class="section reading-section">
+
+
+    <div class="section-title">
+
+        <div>
+
+            <p class="small-heading">
+                YOUR BOOKS
+            </p>
+
+            <h2>
+                🔖 My Reading List
+            </h2>
+
+        </div>
+
+    </div>
+
+
+    <p class="section-description">
+
+        Save books that you want to read later.
+
+    </p>
+
+
+    <div
+        id="readingContainer"
+        class="book-grid">
+
+    </div>
+
+
+    <p
+        id="emptyReading"
+        class="empty-message">
+
+        Your reading list is empty.
+        Click "Add to Reading List" on a book
+        to save it here.
+
+    </p>
+
+</section>
+
+
+
+<!-- ==================================================
+     CATEGORIES
+================================================== -->
+
+<section class="section categories-section">
+
+    <div class="section-heading-center">
+
+        <p class="small-heading">
+            BROWSE
+        </p>
+
+        <h2>
+            Book Categories
+        </h2>
+
+        <p>
+            Explore books according to your interests.
+        </p>
+
+    </div>
+
+
+    <div class="category-grid">
+
+
+        <div
+            class="category-card fiction"
+            onclick="filterBooks('Fiction')">
+
+            <i class="fa-solid fa-book"></i>
+
+            <h3>Fiction</h3>
+
+            <p>
+                Stories & Adventures
+            </p>
+
+        </div>
+
+
+        <div
+            class="category-card romance"
+            onclick="filterBooks('Romance')">
+
+            <i class="fa-solid fa-heart"></i>
+
+            <h3>Romance</h3>
+
+            <p>
+                Love & Relationships
+            </p>
+
+        </div>
+
+
+        <div
+            class="category-card mystery"
+            onclick="filterBooks('Mystery')">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <h3>Mystery</h3>
+
+            <p>
+                Secrets & Suspense
+            </p>
+
+        </div>
+
+
+        <div
+            class="category-card fantasy"
+            onclick="filterBooks('Fantasy')">
+
+            <i class="fa-solid fa-hat-wizard"></i>
+
+            <h3>Fantasy</h3>
+
+            <p>
+                Magic & Imagination
+            </p>
+
+        </div>
+
+
+        <div
+            class="category-card scifi"
+            onclick="filterBooks('Sci-Fi')">
+
+            <i class="fa-solid fa-rocket"></i>
+
+            <h3>Science Fiction</h3>
+
+            <p>
+                Future & Technology
+            </p>
+
+        </div>
+
+
+        <div
+            class="category-card selfhelp"
+            onclick="filterBooks('Self-Help')">
+
+            <i class="fa-solid fa-brain"></i>
+
+            <h3>Self-Help</h3>
+
+            <p>
+                Growth & Motivation
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ==================================================
+     FAVORITES
+================================================== -->
+
+<section class="section">
+
+    <div class="section-title">
+
+        <div>
+
+            <p class="small-heading">
+                YOUR COLLECTION
+            </p>
+
+            <h2>
+                ❤️ My Favorites
+            </h2>
+
+        </div>
+
+    </div>
+
+
+    <div
+        id="favoriteContainer"
+        class="book-grid">
+
+    </div>
+
+
+    <p
+        id="emptyFavorites"
+        class="empty-message">
+
+        You haven't added any favorites yet.
+
+    </p>
+
+</section>
+
+
+
+<!-- ==================================================
+     ABOUT
+================================================== -->
+
+<section id="about" class="about-section">
+
+    <div class="about-content">
+
+        <p class="small-heading">
+            ABOUT BOOKNEST
+        </p>
+
+
+        <h2>
+            More Than Just Books
+        </h2>
+
+
+        <p>
+
+            BookNest is a static book recommendation
+            website created to help readers discover
+            books according to their interests.
+
+        </p>
+
+
+        <p>
+
+            Search books, filter genres, get
+            personalized recommendations and
+            maintain your own reading list.
+
+        </p>
+
+
+        <div class="stats">
+
+            <div>
+
+                <strong id="bookCount">
+                    30+
+                </strong>
+
+                <span>
+                    Books
+                </span>
+
+            </div>
+
+
+            <div>
+
+                <strong>
+                    6
+                </strong>
+
+                <span>
+                    Genres
+                </span>
+
+            </div>
+
+
+            <div>
+
+                <strong>
+                    100%
+                </strong>
+
+                <span>
+                    Static
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ==================================================
+     FOOTER
+================================================== -->
+
+<footer>
+
+    <div class="footer-logo">
+
+        <i class="fa-solid fa-book-open"></i>
+
+        BookNest
+
+    </div>
+
+
+    <p>
+        Discover books. Explore stories.
+        Find your next favorite.
+    </p>
+
+
+    <div class="footer-links">
+
+        <a href="#home">Home</a>
+
+        <a href="#books">Books</a>
+
+        <a href="#recommend">Recommend</a>
+
+        <a href="#reading">Reading List</a>
+
+        <a href="#about">About</a>
+
+    </div>
+
+
+    <p class="copyright">
+
+        © 2026 BookNest. All Rights Reserved.
+
+    </p>
+
+
+    <p class="credit">
+
+        Book covers provided through
+
+        <a
+            href="https://openlibrary.org/"
+            target="_blank">
+
+            Open Library
+
+        </a>.
+
+    </p>
+
+</footer>
+
+
+
+<!-- ==================================================
+     BOOK DETAILS MODAL
+================================================== -->
+
+<div
+    id="bookModal"
+    class="modal">
+
+
+    <div class="modal-content">
+
+
+        <button
+            class="close-btn"
+            onclick="closeModal()">
+
+            ×
+
+        </button>
+
+
+        <div
+            id="modalContent">
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
